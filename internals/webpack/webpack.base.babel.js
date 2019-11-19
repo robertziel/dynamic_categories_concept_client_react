@@ -113,6 +113,8 @@ module.exports = options => ({
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
+      BACKEND_API_URL:
+        process.env.BACKEND_API_URL || 'http://localhost:8080/api',
     }),
   ]),
   resolve: {
