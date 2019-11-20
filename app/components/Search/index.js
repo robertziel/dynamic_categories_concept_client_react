@@ -27,7 +27,10 @@ class Search extends Component {
         <Grid item xs={12} sm={4}>
           <CategoriesList categoryId={this.props.categoryId} />
           <Divider />
-          <Filters onSubmit={this.fetchData} />
+          <Filters
+            categoryId={this.props.categoryId}
+            onSubmit={this.fetchData}
+          />
         </Grid>
         <Grid item xs={12} sm={8}></Grid>
       </Grid>

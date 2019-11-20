@@ -3,9 +3,9 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import queryString from 'qs';
 
-import { Button, Paper } from '@material-ui/core';
+import { Button, Divider, Paper } from '@material-ui/core';
 
-import { stringifyParams } from 'utils/fetchers';
+import { apiGet, stringifyParams } from 'utils/fetchers';
 import history from 'utils/history';
 
 import { IntegerRangeField, StringField } from './filterFields';
@@ -18,24 +18,59 @@ class Filters extends Component {
 
     this.props = props;
 
-    this.params = queryString.parse(history.location.search.replace('?',''));
+    this.params = queryString.parse(history.location.search.replace('?', ''));
 
-    this.state = {
-      price: this.params.price,
-      title: this.params.title,
-    };
+    this.state = Object.assign(
+      {
+        categoryFiltersFields: [],
+        price: this.params.price,
+        title: this.params.title,
+      },
+      this.params.category_filters_values || {},
+    );
 
     this.onSubmit = this.onSubmit.bind(this);
     this.setValue = this.setValue.bind(this);
   }
 
+  categoryFilterKey(categoryFilter) {
+    return `category_filter_${categoryFilter.id}`;
+  }
+
   componentDidMount() {
-    this.fetchData();
+    this.fetchCategoryFields();
+  }
+
+  fetchCategoryFields() {
+    apiGet({
+      path: '/search/category_filters',
+      params: { category_id: this.props.categoryId },
+      afterSuccess: result => {
+        this.setState(
+          { categoryFiltersFields: result.category_filters },
+          () => {
+            this.fetchData();
+          },
+        );
+      },
+    });
   }
 
   fetchData() {
+    const categoryFiltersValues = {};
+
+    this.state.categoryFiltersFields.forEach(categoryFilterField => {
+      const value = this.state[this.categoryFilterKey(categoryFilterField)];
+
+      if (value !== undefined) {
+        categoryFiltersValues[
+          this.categoryFilterKey(categoryFilterField)
+        ] = value;
+      }
+    });
 
     const params = {
+      category_filters_values: categoryFiltersValues,
       price: this.state.price,
       title: this.state.title,
     };
@@ -73,6 +108,41 @@ class Filters extends Component {
             defaultValue={this.state.price}
             onChange={this.setValue}
           />
+          <Divider />
+          <h3>Category related filters</h3>
+          {this.state.categoryFiltersFields.map(categoryFilter => {
+            switch (categoryFilter.datatype) {
+              case 'string':
+                return (
+                  <StringField
+                    key={categoryFilter.id}
+                    fieldKey={this.categoryFilterKey(categoryFilter)}
+                    label={categoryFilter.name}
+                    defaultValue={
+                      this.state[this.categoryFilterKey(categoryFilter)]
+                    }
+                    onChange={this.setValue}
+                  />
+                );
+              case 'integer':
+                return (
+                  <IntegerRangeField
+                    key={categoryFilter.id}
+                    fieldKey={this.categoryFilterKey(categoryFilter)}
+                    label={categoryFilter.name}
+                    defaultValue={
+                      this.state[this.categoryFilterKey(categoryFilter)]
+                    }
+                    onChange={this.setValue}
+                  />
+                );
+              case 'boolean':
+                return <h1>HERE SHOULD BE BOOLEAN </h1>;
+              default:
+                return null;
+            }
+          })}
+          <Divider />
           <Button type="submit">
             <FormattedMessage {...messages.filterButton} />
           </Button>
@@ -83,6 +153,7 @@ class Filters extends Component {
 }
 
 Filters.propTypes = {
+  categoryId: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };

@@ -20,3 +20,4 @@ Backend repository: https://github.com/robertziel/dynamic_categories_concept_bac
 * Fix translations, as this is only a proof of concept I omitted some to speed up coding
 * Big refactoring :)
 * Use more friendly links than ID
+* components/Search/Filters must be refactored
