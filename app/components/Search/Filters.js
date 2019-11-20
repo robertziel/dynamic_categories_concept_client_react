@@ -79,7 +79,9 @@ class Filters extends Component {
       search: stringifyParams(params),
     });
 
-    this.props.onSubmit(params);
+    this.props.onSubmit(
+      Object.assign(params, { category_id: this.props.categoryId }),
+    );
   }
 
   onSubmit(event) {
