@@ -12,4 +12,8 @@ export default defineMessages({
     id: `${scope}.filterName`,
     defaultMessage: 'Name',
   },
+  categoriesListHeader: {
+    id: `${scope}.categoriesListHeader`,
+    defaultMessage: 'Categories',
+  },
 });

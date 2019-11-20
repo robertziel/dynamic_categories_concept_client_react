@@ -26,6 +26,15 @@ const GlobalStyle = createGlobalStyle`
     font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
   }
+
+  .MuiButtonBase-root {
+    border-radius: 0;
+    border: none;
+  }
+
+  hr.MuiDivider-root {
+    margin: 10px;
+  }
 `;
 
 export default GlobalStyle;

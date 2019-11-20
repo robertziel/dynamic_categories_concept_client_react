@@ -3,7 +3,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
-import { TextField } from '@material-ui/core';
+import { Paper, TextField } from '@material-ui/core';
 
 import { stringifyParams } from 'utils/fetchers';
 import history from 'utils/history';
@@ -49,17 +49,19 @@ class Filters extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <TextField
-          name="title"
-          label={this.props.intl.formatMessage(messages.filterName)}
-          type="search"
-          margin="normal"
-          variant="outlined"
-          defaultValue={this.state.title}
-          onChange={event => this.setState({ title: event.target.value })}
-        />
-      </form>
+      <Paper>
+        <form onSubmit={this.onSubmit}>
+          <TextField
+            name="title"
+            label={this.props.intl.formatMessage(messages.filterName)}
+            type="search"
+            margin="normal"
+            variant="outlined"
+            defaultValue={this.state.title}
+            onChange={event => this.setState({ title: event.target.value })}
+          />
+        </form>
+      </Paper>
     );
   }
 }

@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import { Grid, Paper } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import { stringifyParams } from 'utils/fetchers';
 
+import CategoriesList from './CategoriesList';
 import Filters from './Filters';
 
 class Search extends Component {
   constructor(props) {
     super(props);
+
+    this.props = props;
 
     this.fetchData = this.fetchData.bind(this);
   }
@@ -21,14 +25,17 @@ class Search extends Component {
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4}>
-          <Paper>
-            <Filters onSubmit={this.fetchData} />
-          </Paper>
+          <CategoriesList categoryId={this.props.categoryId} />
+          <Filters onSubmit={this.fetchData} />
         </Grid>
         <Grid item xs={12} sm={8}></Grid>
       </Grid>
     );
   }
 }
+
+Search.propTypes = {
+  categoryId: PropTypes.string,
+};
 
 export default Search;
