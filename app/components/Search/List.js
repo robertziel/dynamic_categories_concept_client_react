@@ -7,7 +7,7 @@ export default function List(props) {
   const { items } = props;
 
   return (
-    <GridList cellHeight={150} cols={1}>
+    <GridList cellHeight={250} cols={1}>
       {items.map(item => (
         <GridListTile key={item.id}>
           <Paper>
@@ -15,6 +15,11 @@ export default function List(props) {
             <Divider />
             <p>{item.description}</p>
             <p>{item.price}</p>
+            {item.custom_fields.map(customField => (
+              <p key={customField.name}>
+                {customField.name}: {customField.value}
+              </p>
+            ))}
           </Paper>
         </GridListTile>
       ))}
