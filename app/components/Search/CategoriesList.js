@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { Button, Divider, Grid, Paper } from '@material-ui/core';
+import { Button, Divider, Grid } from '@material-ui/core';
 
 import { apiGet } from 'utils/fetchers';
 
@@ -91,7 +91,7 @@ class CategoriesList extends Component {
 
   render() {
     return (
-      <Paper>
+      <div>
         {this.renderHeader()}
 
         {this.renderHomePageButton()}
@@ -105,7 +105,7 @@ class CategoriesList extends Component {
             </Button>
           </Grid>
         ))}
-      </Paper>
+      </div>
     );
   }
 }

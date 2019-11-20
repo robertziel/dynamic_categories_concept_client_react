@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Divider, Grid } from '@material-ui/core';
+import { Divider, Grid, Paper } from '@material-ui/core';
 
-import { stringifyParams } from 'utils/fetchers';
+import { apiGet } from 'utils/fetchers';
 
 import CategoriesList from './CategoriesList';
 import Filters from './Filters';
+import List from './List';
 
 class Search extends Component {
   constructor(props) {
@@ -14,25 +15,43 @@ class Search extends Component {
 
     this.props = props;
 
+    this.state = {
+      items: [],
+    };
+
     this.fetchData = this.fetchData.bind(this);
   }
 
   fetchData(params) {
-    console.log(`Search form submitted, params: ${stringifyParams(params)}`);
+    apiGet({
+      path: '/search',
+      params,
+      afterSuccess: result => {
+        this.setState({ items: result.items });
+      },
+    });
   }
 
   render() {
+    const { items } = this.state;
+
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4}>
-          <CategoriesList categoryId={this.props.categoryId} />
+          <Paper>
+            <CategoriesList categoryId={this.props.categoryId} />
+          </Paper>
           <Divider />
-          <Filters
-            categoryId={this.props.categoryId}
-            onSubmit={this.fetchData}
-          />
+          <Paper>
+            <Filters
+              categoryId={this.props.categoryId}
+              onSubmit={this.fetchData}
+            />
+          </Paper>
         </Grid>
-        <Grid item xs={12} sm={8}></Grid>
+        <Grid item xs={12} sm={8}>
+          {items.length ? <List items={items} /> : ''}
+        </Grid>
       </Grid>
     );
   }

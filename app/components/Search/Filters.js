@@ -3,7 +3,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import queryString from 'qs';
 
-import { Button, Divider, Paper } from '@material-ui/core';
+import { Button, Divider } from '@material-ui/core';
 
 import { apiGet, stringifyParams } from 'utils/fetchers';
 import history from 'utils/history';
@@ -24,7 +24,7 @@ class Filters extends Component {
       {
         categoryFiltersFields: [],
         price: this.params.price,
-        title: this.params.title,
+        name: this.params.name,
       },
       this.params.category_filters_values || {},
     );
@@ -72,7 +72,7 @@ class Filters extends Component {
     const params = {
       category_filters_values: categoryFiltersValues,
       price: this.state.price,
-      title: this.state.title,
+      name: this.state.name,
     };
 
     history.push({
@@ -94,12 +94,12 @@ class Filters extends Component {
 
   render() {
     return (
-      <Paper>
+      <div>
         <form onSubmit={this.onSubmit}>
           <StringField
-            fieldKey="title"
+            fieldKey="name"
             label={this.props.intl.formatMessage(messages.filterName)}
-            defaultValue={this.state.title}
+            defaultValue={this.state.name}
             onChange={this.setValue}
           />
           <IntegerRangeField
@@ -147,7 +147,7 @@ class Filters extends Component {
             <FormattedMessage {...messages.filterButton} />
           </Button>
         </form>
-      </Paper>
+      </div>
     );
   }
 }
