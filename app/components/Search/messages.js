@@ -5,11 +5,11 @@
  */
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.HomePage';
+export const scope = 'app.components.Search';
 
 export default defineMessages({
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'Dynamic fields concept - Home Page',
+  filterName: {
+    id: `${scope}.filterName`,
+    defaultMessage: 'Name',
   },
 });
