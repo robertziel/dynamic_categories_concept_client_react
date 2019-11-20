@@ -17,3 +17,6 @@ Backend repository: https://github.com/robertziel/dynamic_categories_concept_bac
 ## To do:
 
 * Items search should use **Elasticsearch**
+* Fix translations, as this is only a proof of concept I omitted some to speed up coding
+* Big refactoring :)
+* Use more friendly links than ID

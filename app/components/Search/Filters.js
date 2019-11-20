@@ -3,10 +3,12 @@ import { injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
-import { Paper, TextField } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 
 import { stringifyParams } from 'utils/fetchers';
 import history from 'utils/history';
+
+import { StringField } from './filterFields';
 
 import messages from './messages';
 
@@ -23,6 +25,7 @@ class Filters extends Component {
     };
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.setValue = this.setValue.bind(this);
   }
 
   componentDidMount() {
@@ -47,18 +50,19 @@ class Filters extends Component {
     this.fetchData();
   }
 
+  setValue(field, value) {
+    this.setState({ [field]: value });
+  }
+
   render() {
     return (
       <Paper>
         <form onSubmit={this.onSubmit}>
-          <TextField
-            name="title"
+          <StringField
+            fieldKey="title"
             label={this.props.intl.formatMessage(messages.filterName)}
-            type="search"
-            margin="normal"
-            variant="outlined"
             defaultValue={this.state.title}
-            onChange={event => this.setState({ title: event.target.value })}
+            onChange={this.setValue}
           />
         </form>
       </Paper>
