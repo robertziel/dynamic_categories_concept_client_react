@@ -1,4 +1,4 @@
-import queryString from 'query-string';
+import queryString from 'qs';
 
 import { BACKEND_API_URL } from './constants';
 

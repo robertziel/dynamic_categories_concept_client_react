@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
+import queryString from 'qs';
 
-import { Paper } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 
 import { stringifyParams } from 'utils/fetchers';
 import history from 'utils/history';
 
-import { StringField } from './filterFields';
+import { IntegerRangeField, StringField } from './filterFields';
 
 import messages from './messages';
 
@@ -18,9 +18,10 @@ class Filters extends Component {
 
     this.props = props;
 
-    this.params = queryString.parse(history.location.search);
+    this.params = queryString.parse(history.location.search.replace('?',''));
 
     this.state = {
+      price: this.params.price,
       title: this.params.title,
     };
 
@@ -33,7 +34,9 @@ class Filters extends Component {
   }
 
   fetchData() {
+
     const params = {
+      price: this.state.price,
       title: this.state.title,
     };
 
@@ -64,6 +67,15 @@ class Filters extends Component {
             defaultValue={this.state.title}
             onChange={this.setValue}
           />
+          <IntegerRangeField
+            fieldKey="price"
+            label={this.props.intl.formatMessage(messages.filterPrice)}
+            defaultValue={this.state.price}
+            onChange={this.setValue}
+          />
+          <Button type="submit">
+            <FormattedMessage {...messages.filterButton} />
+          </Button>
         </form>
       </Paper>
     );

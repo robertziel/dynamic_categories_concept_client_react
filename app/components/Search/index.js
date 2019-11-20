@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Grid } from '@material-ui/core';
+import { Divider, Grid } from '@material-ui/core';
 
 import { stringifyParams } from 'utils/fetchers';
 
@@ -26,6 +26,7 @@ class Search extends Component {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4}>
           <CategoriesList categoryId={this.props.categoryId} />
+          <Divider />
           <Filters onSubmit={this.fetchData} />
         </Grid>
         <Grid item xs={12} sm={8}></Grid>
