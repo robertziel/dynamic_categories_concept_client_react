@@ -126,7 +126,7 @@ class Filters extends Component {
                     onChange={this.setValue}
                   />
                 );
-              case 'integer':
+              case 'float':
                 return (
                   <IntegerRangeField
                     key={categoryFilter.id}
@@ -138,8 +138,6 @@ class Filters extends Component {
                     onChange={this.setValue}
                   />
                 );
-              case 'boolean':
-                return <h1>HERE SHOULD BE BOOLEAN </h1>;
               default:
                 return null;
             }
