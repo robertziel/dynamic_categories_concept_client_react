@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Divider, InputLabel, TextField } from '@material-ui/core';
+import { Divider, InputLabel } from '@material-ui/core';
+import { TextField } from 'components/_ui-elements';
 
 export class IntegerRangeField extends Component {
   constructor(props) {

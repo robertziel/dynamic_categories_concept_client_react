@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Divider, Grid, Paper } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
+import { Grid, Paper } from 'components/_ui-elements';
 
 import { apiGet } from 'utils/fetchers';
 
@@ -38,7 +39,7 @@ class Search extends Component {
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4}>
-          <Paper>
+          <Paper topLine>
             <CategoriesList categoryId={this.props.categoryId} />
           </Paper>
           <Divider />

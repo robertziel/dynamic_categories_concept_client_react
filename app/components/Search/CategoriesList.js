@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { Button, Divider, Grid } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
+import { Button, Grid } from 'components/_ui-elements';
 
 import { apiGet } from 'utils/fetchers';
 

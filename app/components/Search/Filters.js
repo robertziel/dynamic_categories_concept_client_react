@@ -3,7 +3,8 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import queryString from 'qs';
 
-import { Button, Divider } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
+import { Button } from 'components/_ui-elements';
 
 import { apiGet, stringifyParams } from 'utils/fetchers';
 import history from 'utils/history';
