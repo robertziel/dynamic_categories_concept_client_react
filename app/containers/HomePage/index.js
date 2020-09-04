@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 
 import { Container, Grid, Paper } from '@material-ui/core';
 
+import Cart from 'components/Cart';
 import Search from 'components/Search';
 import messages from './messages';
 
@@ -26,6 +27,8 @@ export default function HomePage(props) {
             <h1>
               <FormattedMessage {...messages.header} />
             </h1>
+
+            <Cart />
           </Paper>
         </Grid>
       </Grid>
