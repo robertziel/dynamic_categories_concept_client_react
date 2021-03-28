@@ -14,10 +14,8 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log(props);
-
     this.state = {
-      total: props.cart.length,
+      total: 0,
       open: false,
     };
 
@@ -55,7 +53,8 @@ class Cart extends React.Component {
     if (!this.props.cart) return <p>loading...!!!!</p>;
 
     const component = this;
-    const products = this.props.cart.map(function(product) {
+    const products = Object.keys(this.props.cart).map(function(key) {
+      const product = component.props.cart[key];
       return (
         <Product
           name={product.name}
@@ -64,6 +63,7 @@ class Cart extends React.Component {
           amount={product.amount}
           handleShow={component.showProduct}
           handleTotal={component.calculateTotal}
+          key={product.id}
         />
       );
     });
