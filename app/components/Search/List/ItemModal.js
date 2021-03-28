@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, TextField } from 'components/_ui-elements';
 import { AddShoppingCart } from '@material-ui/icons';
+import { addToCart } from 'components/Cart/actions';
+import { connect } from 'react-redux';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -31,14 +33,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ItemModal({ open, closeModal, item }) {
+function ItemModal({ open, closeModal, item, handleAddToCart }) {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
   const [amount, setAmount] = React.useState(1);
 
-  const addToCard = () => {
-    console.log(`ADDED ${amount}`);
+  const onAddToCartClick = () => {
+    handleAddToCart({ ...item, amount });
     closeModal();
   };
 
@@ -61,7 +63,7 @@ export default function ItemModal({ open, closeModal, item }) {
             defaultValue={1}
             onChange={event => setAmount(event.target.value)}
           />
-          <Button onClick={addToCard}>
+          <Button onClick={onAddToCartClick}>
             <AddShoppingCart /> Add to cart
           </Button>
         </div>
@@ -75,3 +77,14 @@ ItemModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   item: PropTypes.object.isRequired,
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    handleAddToCart: item => {
+      dispatch(addToCart(item));
+    },
+    dispatch,
+  };
+}
+
+export default connect(null, mapDispatchToProps)(ItemModal);

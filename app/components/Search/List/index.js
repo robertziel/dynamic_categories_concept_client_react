@@ -11,7 +11,7 @@ export default function List(props) {
   return (
     <GridList cellHeight={250} cols={1}>
       {items.map(item => (
-        <ItemCard item={item} />
+        <ItemCard item={item} key={item.id} />
       ))}
     </GridList>
   );

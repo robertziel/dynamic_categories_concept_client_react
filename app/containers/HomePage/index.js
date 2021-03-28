@@ -24,11 +24,13 @@ export default function HomePage(props) {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper>
-            <h1>
-              <FormattedMessage {...messages.header} />
-            </h1>
+            <div>
+              <h1>
+                <FormattedMessage {...messages.header} />
+              </h1>
 
-            <Cart />
+              <Cart />
+            </div>
           </Paper>
         </Grid>
       </Grid>
