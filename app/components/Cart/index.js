@@ -54,16 +54,13 @@ class Cart extends React.Component {
 
     const component = this;
     const products = Object.keys(this.props.cart).map(function(key) {
-      const product = component.props.cart[key];
+      const item = component.props.cart[key];
       return (
         <Product
-          name={product.name}
-          price={product.price}
-          info={product.info}
-          amount={product.amount}
+          item={item}
           handleShow={component.showProduct}
           handleTotal={component.calculateTotal}
-          key={product.id}
+          key={item.id}
         />
       );
     });

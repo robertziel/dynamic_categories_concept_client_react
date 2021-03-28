@@ -1,29 +1,35 @@
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { addOneMore, substractOneMore } from 'components/Cart/actions';
 
 class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      qty: props.amount,
+      item: props.item,
+      amount: props.item.amount,
     };
+    this.props = props;
+
     this.add = this.add.bind(this);
     this.subtract = this.subtract.bind(this);
     this.showInfo = this.showInfo.bind(this);
   }
 
   add() {
+    this.props.add(this.state.item);
     this.setState({
-      qty: this.state.qty + 1,
+      amount: this.state.amount + 1,
     });
-    this.props.handleTotal(this.props.price);
   }
 
   subtract() {
+    this.props.substract(this.state.item);
     this.setState({
-      qty: this.state.qty - 1,
+      amount: this.state.amount - 1,
     });
-    this.props.handleTotal(-this.props.price);
   }
 
   showInfo() {
@@ -36,10 +42,10 @@ class Product extends React.Component {
         <div className="row form-group">
           <div className="col-sm-10">
             <h4>
-              {this.props.name}: ${this.props.price}
+              {this.state.item.name}: ${this.state.item.price}
             </h4>
           </div>
-          <div className="col-sm-2 text-right">qty: {this.state.qty}</div>
+          <div className="col-sm-2 text-right">Amount: {this.state.amount}</div>
         </div>
         <div className="row btn-toolbar">
           <div className="col-6">
@@ -49,14 +55,14 @@ class Product extends React.Component {
           </div>
           <div className="col-6 text-right">
             <button className="btn btn-outline-primary" onClick={this.add}>
-              +1
+              +
             </button>
             <button
               className="btn btn-outline-primary"
               onClick={this.subtract}
-              disabled={this.state.qty < 1}
+              disabled={this.state.item.amount < 1}
             >
-              -1
+              -
             </button>
           </div>
         </div>
@@ -66,4 +72,16 @@ class Product extends React.Component {
   }
 }
 
-export default Product;
+function mapDispatchToProps(dispatch) {
+  return {
+    substract: item => {
+      dispatch(substractOneMore(item));
+    },
+    add: item => {
+      dispatch(addOneMore(item));
+    },
+    dispatch,
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Product);
