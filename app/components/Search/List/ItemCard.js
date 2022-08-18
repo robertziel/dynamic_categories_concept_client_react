@@ -33,7 +33,7 @@ export default function ListCard({ item }) {
           <Typography gutterBottom variant="h5" component="h2">
             {item.name}
           </Typography>
-          <Typography variant="price">{item.price}</Typography>
+          <Typography variant="price">{item.price} $</Typography>
           <UiList>
             {item.custom_fields.map(customField => (
               <ListItem key={customField.name}>

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { Modal, Button, Paper } from '@material-ui/core';
+import { Modal, Button, Paper } from 'components/_ui-elements';
 import { ShoppingCart } from '@material-ui/icons';
 import { getCart } from './selectors';
 
@@ -23,13 +23,22 @@ class Cart extends React.Component {
     this.showProduct = this.showProduct.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+
+    this.calculateTotal();
   }
 
-  calculateTotal(price) {
-    this.setState({
-      total: this.state.total + price,
+  calculateTotal() {
+    let total = 0.0;
+
+    Object.keys(this.props.cart).forEach(key => {
+      const product = this.props.cart[key];
+      console.log(product);
+      total += product.price * product.amount;
     });
-    console.log(this.state.total);
+
+    this.setState({
+      total,
+    });
   }
 
   showProduct(info) {
@@ -38,15 +47,24 @@ class Cart extends React.Component {
   }
 
   openModal() {
-    this.setState({
-      open: true,
-    });
+    this.setState(
+      {
+        open: true,
+      },
+      () => {
+        this.calculateTotal();
+      },
+    );
   }
 
   closeModal() {
     this.setState({
       open: false,
     });
+  }
+
+  purchase() {
+    console.log('PURCHASE');
   }
 
   render() {
@@ -75,6 +93,13 @@ class Cart extends React.Component {
             <Button onClick={component.closeModal}>X</Button>
             {products}
             <Total total={this.state.total} />
+            <Button
+              variant="contained"
+              color="success"
+              onClick={component.purchase}
+            >
+              Purchase
+            </Button>
           </Paper>
         </Modal>
       </div>
